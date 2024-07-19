@@ -21,7 +21,7 @@ export default function Task({ task, delete: deleteProps, showModal }) {
       </div>
       <div
         className="flex justify-center bg-orange-500 w-8 h-8 cursor-pointer"
-        onClick={() => deleteProps(task.id)}
+        onClick={showModal}
       >
         <img src="/bin-white.svg" alt="" className="w-5" />
       </div>

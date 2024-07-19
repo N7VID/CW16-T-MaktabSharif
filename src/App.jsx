@@ -44,7 +44,13 @@ function App() {
 
   return (
     <>
-      {modal && <Modal />}
+      {modal && (
+        <Modal
+          task={tasks}
+          modal={setModal}
+          delete={(id) => handleDeleteButton(id)}
+        />
+      )}
       <div className="flex flex-col justify-center items-center bg-blue-500 w-screen h-screen font-nunito">
         <h1 className="text-white text-[30px] mb-4">Tasks</h1>
         <ManageTask
