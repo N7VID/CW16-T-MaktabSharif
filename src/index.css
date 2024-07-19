@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Nunito";
+    src: url(/CW-T-16/public/Nunito-Regular.ttf);
+  }
+}
