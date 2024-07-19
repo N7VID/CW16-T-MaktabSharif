@@ -14,32 +14,15 @@ function App() {
   function handleAddTask(newValue) {
     let obj = { id: crypto.randomUUID(), title: newValue, isDone: false };
     setTasks((prevTask) => {
-      const array = [...prevTask, obj];
-      localStorage.setItem("tasks", JSON.stringify(array));
-      return array;
+      return [...prevTask, obj];
     });
   }
 
   function handleDeleteButton(id) {
     setTasks((prevTask) => {
-      let deleted = prevTask.filter((task) => task.id !== id);
-      localStorage.setItem("tasks", JSON.stringify(deleted));
+      const deleted = prevTask.filter((task) => task.id !== id);
       return deleted;
     });
-  }
-
-  useEffect(() => {
-    handleDropDown();
-  }, [select]);
-
-  function handleDropDown() {
-    if (select === "Done") {
-      setTasks(() => data.filter((task) => task.isDone));
-    } else if (select === "unDone") {
-      setTasks(() => data.filter((task) => !task.isDone));
-    } else {
-      setTasks(data);
-    }
   }
 
   return (
@@ -58,7 +41,13 @@ function App() {
           akbar={(text) => handleAddTask(text)}
         />
         <TasksTable
-          tasks={tasks}
+          tasks={
+            select === "Done"
+              ? tasks.filter((task) => task.isDone)
+              : select === "unDone"
+              ? tasks.filter((task) => !task.isDone)
+              : tasks
+          }
           delete={(id) => handleDeleteButton(id)}
           modal={setModal}
         />
