@@ -4,17 +4,27 @@ import TasksTable from "./components/tasks-table/TasksTable";
 import data from "./data";
 import Modal from "./components/modal/Modal";
 
-// const getLocalStorage = JSON.parse(localStorage.getItem("tasks"));
-
 function App() {
   const [select, setSelect] = useState("All");
   const [tasks, setTasks] = useState(data);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState({ isOpen: false, deleteId: null });
 
   function handleAddTask(newValue) {
     let obj = { id: crypto.randomUUID(), title: newValue, isDone: false };
     setTasks((prevTask) => {
       return [...prevTask, obj];
+    });
+  }
+
+  function handleDoneTask(id) {
+    setTasks((prevTask) => {
+      const newTask = prevTask.map((task) => {
+        if (task.id === id) {
+          task.isDone = true;
+        }
+        return task;
+      });
+      return newTask;
     });
   }
 
@@ -27,11 +37,11 @@ function App() {
 
   return (
     <>
-      {modal && (
+      {modal.isOpen && (
         <Modal
-          task={tasks}
-          modal={setModal}
-          delete={(id) => handleDeleteButton(id)}
+          modal={modal}
+          setModal={setModal}
+          handleDeleteButton={handleDeleteButton}
         />
       )}
       <div className="flex flex-col justify-center items-center bg-blue-500 w-screen h-screen font-nunito">
@@ -49,7 +59,8 @@ function App() {
               : tasks
           }
           delete={(id) => handleDeleteButton(id)}
-          modal={setModal}
+          setModal={setModal}
+          handleDoneTask={handleDoneTask}
         />
       </div>
     </>

@@ -1,4 +1,9 @@
-export default function Task({ task, delete: deleteProps, showModal }) {
+export default function Task({
+  task,
+  delete: deleteProps,
+  setModal,
+  handleDoneTask,
+}) {
   return (
     <div className="flex justify-center gap-1 mt-6 h-7">
       <div
@@ -11,6 +16,7 @@ export default function Task({ task, delete: deleteProps, showModal }) {
         {task.title}
       </div>
       <div
+        onClick={() => handleDoneTask(task.id)}
         className={
           task.isDone
             ? "flex justify-center bg-green-800 w-8 h-8 cursor-pointer"
@@ -21,7 +27,7 @@ export default function Task({ task, delete: deleteProps, showModal }) {
       </div>
       <div
         className="flex justify-center bg-orange-500 w-8 h-8 cursor-pointer"
-        onClick={showModal}
+        onClick={() => setModal(() => ({ deleteId: task.id, isOpen: true }))}
       >
         <img src="/bin-white.svg" alt="" className="w-5" />
       </div>
